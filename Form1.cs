@@ -34,15 +34,32 @@ namespace souboryBin06
         {
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
-                FileStream fs = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read);
 
-                //FileStream fs1 = new FileStream(saveFileDialog1.FileName, FileMode.Open, FileAccess.Write);
+                FileStream fs = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read);
                 BinaryReader br = new BinaryReader(fs);
-                //BinaryWriter bw = new BinaryWriter(fs1);
-                while (br.BaseStream.Position < br.BaseStream.Length)
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    int cislo = br.ReadInt32();
-                    listBox1.Items.Add(cislo);
+                    FileStream fs1 = new FileStream(saveFileDialog1.FileName, FileMode.Open, FileAccess.ReadWrite);
+                    BinaryWriter bw = new BinaryWriter(fs1);
+                    BinaryReader br1 = new BinaryReader(fs1);
+                    while (br.BaseStream.Position < br.BaseStream.Length)
+                    {
+                        int cislo = br.ReadInt32();
+                        listBox1.Items.Add(cislo);
+                        if(JePrvocislo(cislo))
+                        {
+                            bw.Write(cislo);
+                        }
+                    }
+                    bw.Close();
+
+
+                    while(br1.BaseStream.Position < br1.BaseStream.Length)
+                    {
+                        int cislo = br.ReadInt32();
+                        listBox2.Items.Add(cislo);
+                    }
+                    fs1.Close();
                 }
             }
         }
