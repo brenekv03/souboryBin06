@@ -52,9 +52,8 @@ namespace souboryBin06
                         }
                     }
                     bw.Close();
-
-
-                    while(br1.BaseStream.Position < br1.BaseStream.Length)
+                    fs.Close();
+                    while (br1.BaseStream.Position < br1.BaseStream.Length)
                     {
                         int cislo = br.ReadInt32();
                         listBox2.Items.Add(cislo);
